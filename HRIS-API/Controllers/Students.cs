@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HRIS_API.IServices;
 using HRIS_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,6 +23,7 @@ namespace HRIS_API.Controllers
         }
         // GET: api/<Students>
         [HttpGet]
+        [Authorize]
         public IEnumerable<Student> Get()
         {
             return _oStudentServices.GetAll();
