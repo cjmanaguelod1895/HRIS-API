@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HRIS_API.Common;
+using HRIS_API.IServices;
+using HRIS_API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +29,11 @@ namespace HRIS_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSingleton<IConfiguration>(Configuration);
+            Global.ConnectionString = Configuration.GetConnectionString("CrudAPI");
+
+            services.AddScoped<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
