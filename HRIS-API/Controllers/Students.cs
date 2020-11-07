@@ -23,7 +23,7 @@ namespace HRIS_API.Controllers
         }
         // GET: api/<Students>
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IEnumerable<Student> Get()
         {
             return _oStudentServices.GetAll();

@@ -88,11 +88,13 @@ namespace HRIS_API.Services
 
         public List<Student> GetAll()
         {
+            _oStudent = new Student();
+
             _oStudents = new List<Student>();
 
             try
             {
-                //int operationType = Convert.ToInt32(oStudent.StudentId == 0 ? OperationType.Insert : OperationType.Update);
+                int operationType = Convert.ToInt32(OperationType.SelectAll);
 
                 using (IDbConnection con = new SqlConnection(Global.ConnectionString))
                 {
@@ -101,11 +103,15 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oStudents = con.Query<Student>("SELECT * FROM Student").ToList();
+                     var oStudents = con.Query<Student>("SP_Student",
+                        this.SetParameters(_oStudent, operationType),
+                        commandType: CommandType.StoredProcedure);
+
+                    //var oStudents = con.Query<Student>("SELECT * FROM Student").ToList();
 
                     if (oStudents != null && oStudents.Count() > 0)
                     {
-                        _oStudents = oStudents;
+                        _oStudents = oStudents.ToList();
                     }
                 }
 

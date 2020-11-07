@@ -62,6 +62,7 @@ namespace HRIS_API
             Global.ConnectionString = Configuration.GetConnectionString("CrudAPI");
 
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
