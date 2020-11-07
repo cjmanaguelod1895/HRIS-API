@@ -33,6 +33,16 @@ namespace HRIS_API
         {
             services.AddControllers();
 
+            //CORS
+            services.AddCors(options =>
+            {
+            options.AddDefaultPolicy(
+                builder => builder.WithOrigins("https://localhost:44332"));
+                options.AddPolicy("myPolicy", builder =>
+                 builder.WithOrigins("http://localhost:8080"));
+                   
+            });
+
             //JWT Implementation
 
             services.AddAuthentication(opt =>
@@ -77,13 +87,15 @@ namespace HRIS_API
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseAuthorization();
 
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors("myPolicy");
             });
         }
     }

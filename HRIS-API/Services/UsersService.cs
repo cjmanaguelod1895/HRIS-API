@@ -16,6 +16,82 @@ namespace HRIS_API.Services
         Users _oUser = new Users();
         List<Users> _oUsers = new List<Users>();
 
+        public List<Users> GetAllUsers()
+        {
+            _oUser = new Users();
+            _oUsers = new List<Users>();
+
+            try
+            {
+                int operationType = Convert.ToInt32(OperationType.SelectAll);
+
+                using (IDbConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+                    var oUsers = con.Query<Users>("SP_Users",
+                       this.SetParameters(_oUser, operationType),
+                       commandType: CommandType.StoredProcedure);
+
+
+                    if (oUsers != null && oUsers.Count() > 0)
+                    {
+                        _oUsers = oUsers.ToList();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _oUser.Message = ex.Message;
+            }
+
+            return _oUsers;
+        }
+
+        public Users GetUser(int userID)
+        {
+
+
+            _oUser = new Users()
+            {
+                UserId = userID
+            };
+
+            try
+            {
+                int operationType = Convert.ToInt32(OperationType.SelectSpecific);
+
+                using (IDbConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+                    var oUsers = con.Query<Users>("SP_Users",
+                       this.SetParameters(_oUser, operationType),
+                       commandType: CommandType.StoredProcedure).ToList();
+
+                    if (oUsers != null && oUsers.Count() > 0)
+                    {
+                        _oUser = oUsers.SingleOrDefault();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _oUser.Message = ex.Message;
+            }
+
+            return _oUser;
+        }
+
+
         public Users AddUser(Users users)
         {
             _oUser = new Users();
@@ -52,6 +128,40 @@ namespace HRIS_API.Services
 
         }
 
+        public Users UpdateUser(int userId, Users user)
+        {
+            _oUser = new Users();
+
+            try
+            {
+                int operationType = Convert.ToInt32(OperationType.Update);
+
+                using (IDbConnection con = new SqlConnection(Global.ConnectionString))
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+                    var oUsers = con.Query<Users>("SP_Users",
+                        this.SetParameters(user, operationType),
+                        commandType: CommandType.StoredProcedure);
+
+                    if (oUsers != null && oUsers.Count() > 0)
+                    {
+                        _oUser = oUsers.FirstOrDefault();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _oUser.Message = ex.Message;
+            }
+
+            return _oUser;
+        }
+
         public string Delete(int userId)
         {
             string message = "";
@@ -70,13 +180,15 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oUsers = con.Query<Users>("SP_Student",
+                    var oUsers = con.Query<Users>("SP_Users",
                         this.SetParameters(_oUser, (int)OperationType.Delete),
                         commandType: CommandType.StoredProcedure);
 
                     if (oUsers != null && oUsers.Count() > 0)
                     {
                         _oUser = oUsers.FirstOrDefault();
+
+                        message = "Data Deleted!";
                     }
                 }
             }
@@ -89,74 +201,6 @@ namespace HRIS_API.Services
             return message;
         }
 
-        public List<Users> GetAllUsers()
-        {
-            _oUser = new Users();
-            _oUsers = new List<Users>();
-
-            try
-            {
-                int operationType = Convert.ToInt32(OperationType.SelectAll);
-
-                using (IDbConnection con = new SqlConnection(Global.ConnectionString))
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-
-                    var oUsers = con.Query<Users>("SP_Users",
-                       this.SetParameters(_oUser, operationType),
-                       commandType: CommandType.StoredProcedure);
-
-                    //var oStudents = con.Query<Student>("SELECT * FROM Student").ToList();
-
-                    if (oUsers != null && oUsers.Count() > 0)
-                    {
-                        _oUsers = oUsers.ToList();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-                _oUser.Message = ex.Message;
-            }
-
-            return _oUsers;
-        }
-
-        public Users GetUser(int userID)
-        {
-            _oUser = new Users();
-
-            try
-            {
-                //int operationType = Convert.ToInt32(oStudent.StudentId == 0 ? OperationType.Insert : OperationType.Update);
-
-                using (IDbConnection con = new SqlConnection(Global.ConnectionString))
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-
-                    var oUsers = con.Query<Users>("SELECT * FROM Users WHERE UserId = " + userID).ToList();
-
-                    if (oUsers != null && oUsers.Count() > 0)
-                    {
-                        _oUser = oUsers.SingleOrDefault();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-                _oUser.Message = ex.Message;
-            }
-
-            return _oUser;
-        }
 
         private DynamicParameters SetParameters(Users oUser, int operationType)
         {
@@ -174,5 +218,6 @@ namespace HRIS_API.Services
 
             return parameters;
         }
+
     }
 }

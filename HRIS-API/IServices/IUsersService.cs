@@ -10,9 +10,12 @@ namespace HRIS_API.IServices
     {
         List<Users> GetAllUsers();
 
-        Users GetUser(int userID);
+        Users GetUser(int userId);
 
         Users AddUser(Users users);
+
+        Users UpdateUser(int userId, Users user);
+
 
         string Delete(int userId);
     }

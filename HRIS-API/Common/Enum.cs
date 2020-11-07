@@ -7,10 +7,11 @@ namespace HRIS_API.Common
 {
     public enum OperationType
     {
-        SelectAll  =  0,
-        Insert =  1,
-        Update =  2,
-        Delete =  3
+        SelectAll =  0,
+        SelectSpecific = 1,
+        Insert =  2,
+        Update =  3,
+        Delete =  4
 
     }
 }
