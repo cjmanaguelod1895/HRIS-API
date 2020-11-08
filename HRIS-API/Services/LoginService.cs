@@ -80,22 +80,6 @@ namespace HRIS_API.Services
             return new AuthenticateResponse(_oUser, token);
         }
 
-        //private DynamicParameters SetParameters(Users oUser, int operationType)
-        //{
-
-
-        //    DynamicParameters parameters = new DynamicParameters();
-        //    parameters.Add("@UserId", oUser.UserId);
-        //    parameters.Add("@Name", oUser.Name);
-        //    parameters.Add("@Age", oUser.Age);
-        //    parameters.Add("@Address", oUser.Address);
-        //    parameters.Add("@EmailAddress", oUser.EmailAddress);
-        //    parameters.Add("@Username", oUser.Username);
-        //    parameters.Add("@Password", oUser.Password);
-        //    parameters.Add("@OperationType", operationType);
-
-        //    return parameters;
-        //}
 
         private string generateJwtToken(Users user)
         {

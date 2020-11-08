@@ -49,7 +49,7 @@ namespace HRIS_API.Services
                     }
 
                     var oUsers = con.Query<Users>("sp_Users",
-                       this.SetParameters(_oUser, operationType),
+                       _oUser.SetParameters(_oUser, operationType),
                        commandType: CommandType.StoredProcedure);
 
 
@@ -89,7 +89,7 @@ namespace HRIS_API.Services
                     }
 
                     var oUsers = con.Query<Users>("sp_Users",
-                       this.SetParameters(_oUser, operationType),
+                        _oUser.SetParameters(_oUser, operationType),
                        commandType: CommandType.StoredProcedure).ToList();
 
                     if (oUsers != null && oUsers.Count() > 0)
@@ -124,7 +124,7 @@ namespace HRIS_API.Services
                     }
 
                     var oUsers = con.Query<Users>("sp_Users",
-                        this.SetParameters(users, operationType),
+                        _oUser.SetParameters(users, operationType),
                         commandType: CommandType.StoredProcedure);
 
                     if (oUsers != null && oUsers.Count() > 0)
@@ -160,7 +160,7 @@ namespace HRIS_API.Services
                     }
 
                     var oUsers = con.Query<Users>("sp_Users",
-                        this.SetParameters(user, operationType),
+                        _oUser.SetParameters(user, operationType),
                         commandType: CommandType.StoredProcedure);
 
                     if (oUsers != null && oUsers.Count() > 0)
@@ -197,7 +197,7 @@ namespace HRIS_API.Services
                     }
 
                     var oUsers = con.Query<Users>("sp_Users",
-                        this.SetParameters(_oUser, (int)OperationType.Delete),
+                        _oUser.SetParameters(_oUser, (int)OperationType.Delete),
                         commandType: CommandType.StoredProcedure);
 
                     if (oUsers != null && oUsers.Count() > 0)
@@ -215,40 +215,6 @@ namespace HRIS_API.Services
             }
 
             return message;
-        }
-
-        //Helper Methods
-
-        private DynamicParameters SetParameters(Users oUser, int operationType)
-        {
-            
-          
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@UserId", oUser.UserId);
-            parameters.Add("@Name", oUser.Name);
-            parameters.Add("@Age", oUser.Age);
-            parameters.Add("@Address", oUser.Address);
-            parameters.Add("@EmailAddress", oUser.EmailAddress);
-            parameters.Add("@Username", oUser.Username);
-            parameters.Add("@Password", oUser.Password);
-            parameters.Add("@OperationType", operationType);
-
-            return parameters;
-        }
-
-        private string generateJwtToken(Users user)
-        {
-            // generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
 
 

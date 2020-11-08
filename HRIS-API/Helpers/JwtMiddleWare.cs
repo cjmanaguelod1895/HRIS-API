@@ -49,12 +49,12 @@ namespace HRIS_API.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "userId").Value);
 
                 // attach user to context on successful jwt validation
                 context.Items["User"] = userService.GetUser(userId);
             }
-            catch
+            catch( Exception ex)
             {
                 // do nothing if jwt validation fails
                 // user is not attached to context so request won't have access to secure routes

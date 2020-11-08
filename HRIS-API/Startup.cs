@@ -69,6 +69,11 @@ namespace HRIS_API
 
             app.UseCors();
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
 
