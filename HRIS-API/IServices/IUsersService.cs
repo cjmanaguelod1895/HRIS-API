@@ -8,7 +8,6 @@ namespace HRIS_API.IServices
 {
     public interface IUsersService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
 
         List<Users> GetAllUsers();
 

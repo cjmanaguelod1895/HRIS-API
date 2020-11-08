@@ -45,38 +45,13 @@ namespace HRIS_API
             });
 
             //JWT Implementation
-
-            //services.AddAuthentication(opt =>
-            //{
-            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            //})
-            //.AddJwtBearer(options =>
-            //{
-
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-
-            //        ValidIssuer = "https://localhost:44332",
-            //        ValidAudience = "https://localhost:44332",
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@cj"))
-            //    };
-
-            //}); 
-
             // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
 
             services.AddSingleton<IConfiguration>(Configuration);
             Global.ConnectionString = Configuration.GetConnectionString("CrudAPI");
-
-            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUsersService, UsersService>();
         }
 
@@ -93,10 +68,6 @@ namespace HRIS_API
             app.UseRouting();
 
             app.UseCors();
-
-            //app.UseAuthorization();
-
-            //app.UseAuthentication();
 
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();

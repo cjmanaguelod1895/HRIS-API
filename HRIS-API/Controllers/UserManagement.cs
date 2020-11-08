@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HRIS_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("HRIS-API/[controller]")]
     [ApiController]
     public class UserManagement : ControllerBase
     {
@@ -20,16 +20,6 @@ namespace HRIS_API.Controllers
             _oUsersService = oUsersService;
         }
 
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
-        {
-            var response = _oUsersService.Authenticate(model);
-
-            if (response == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            return Ok(response);
-        }
 
         // GET: api/<UserManagement>
         [HttpGet]
@@ -41,6 +31,7 @@ namespace HRIS_API.Controllers
 
         // GET api/<UserManagement>/5
         [HttpGet("{id}")]
+        [Authorize]
         public Users Get(int id)
         {
             return _oUsersService.GetUser(id);
@@ -48,6 +39,7 @@ namespace HRIS_API.Controllers
 
         // POST api/<UserManagement>
         [HttpPost]
+        [Authorize]
         public Users Post([FromBody] Users oUsers)
         {
             if (ModelState.IsValid)
@@ -62,6 +54,7 @@ namespace HRIS_API.Controllers
 
         // PUT api/<UserManagement>/5
         [HttpPut("{id}")]
+        [Authorize]
         public Users Put(int id, [FromBody] Users oUsers)
         {
             if (ModelState.IsValid)
@@ -76,6 +69,7 @@ namespace HRIS_API.Controllers
 
         // DELETE api/<UserManagement>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public string Delete(int id)
         {
             return _oUsersService.Delete(id);

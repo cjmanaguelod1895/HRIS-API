@@ -30,18 +30,7 @@ namespace HRIS_API.Services
             _appSettings = appsettings.Value;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
-        {
-            var user = _oUsers.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
-
-            // return null if user not found
-            if (user == null) return null;
-
-            // authentication successful so generate jwt token
-            var token = generateJwtToken(user);
-
-            return new AuthenticateResponse(user, token);
-        }
+      
 
         public List<Users> GetAllUsers()
         {
@@ -59,7 +48,7 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oUsers = con.Query<Users>("SP_Users",
+                    var oUsers = con.Query<Users>("sp_Users",
                        this.SetParameters(_oUser, operationType),
                        commandType: CommandType.StoredProcedure);
 
@@ -99,7 +88,7 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oUsers = con.Query<Users>("SP_Users",
+                    var oUsers = con.Query<Users>("sp_Users",
                        this.SetParameters(_oUser, operationType),
                        commandType: CommandType.StoredProcedure).ToList();
 
@@ -134,7 +123,7 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oUsers = con.Query<Users>("SP_Users",
+                    var oUsers = con.Query<Users>("sp_Users",
                         this.SetParameters(users, operationType),
                         commandType: CommandType.StoredProcedure);
 
@@ -170,7 +159,7 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oUsers = con.Query<Users>("SP_Users",
+                    var oUsers = con.Query<Users>("sp_Users",
                         this.SetParameters(user, operationType),
                         commandType: CommandType.StoredProcedure);
 
@@ -207,7 +196,7 @@ namespace HRIS_API.Services
                         con.Open();
                     }
 
-                    var oUsers = con.Query<Users>("SP_Users",
+                    var oUsers = con.Query<Users>("sp_Users",
                         this.SetParameters(_oUser, (int)OperationType.Delete),
                         commandType: CommandType.StoredProcedure);
 

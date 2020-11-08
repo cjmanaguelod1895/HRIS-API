@@ -11,7 +11,8 @@ namespace HRIS_API.Common
         SelectSpecific = 1,
         Insert =  2,
         Update =  3,
-        Delete =  4
+        Delete =  4,
+        Login = 5
 
     }
 }

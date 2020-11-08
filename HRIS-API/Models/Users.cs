@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -26,6 +27,24 @@ namespace HRIS_API.Models
 
 
         public string Message { get; set; }
+
+
+        public DynamicParameters SetParameters(Users oUser, int operationType)
+        {
+
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserId", oUser.UserId);
+            parameters.Add("@Name", oUser.Name);
+            parameters.Add("@Age", oUser.Age);
+            parameters.Add("@Address", oUser.Address);
+            parameters.Add("@EmailAddress", oUser.EmailAddress);
+            parameters.Add("@Username", oUser.Username);
+            parameters.Add("@Password", oUser.Password);
+            parameters.Add("@OperationType", operationType);
+
+            return parameters;
+        }
 
     }
 }
