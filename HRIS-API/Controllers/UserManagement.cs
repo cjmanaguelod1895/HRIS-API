@@ -19,8 +19,21 @@ namespace HRIS_API.Controllers
         {
             _oUsersService = oUsersService;
         }
+
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _oUsersService.Authenticate(model);
+
+            if (response == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(response);
+        }
+
         // GET: api/<UserManagement>
         [HttpGet]
+        [Authorize]
         public IEnumerable<Users> Get()
         {
             return _oUsersService.GetAllUsers();

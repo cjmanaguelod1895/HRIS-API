@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HRIS_API.Common;
+using HRIS_API.Helpers;
 using HRIS_API.IServices;
 using HRIS_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,28 +46,32 @@ namespace HRIS_API
 
             //JWT Implementation
 
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //services.AddAuthentication(opt =>
+            //{
+            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            })
-            .AddJwtBearer(options =>
-            {
+            //})
+            //.AddJwtBearer(options =>
+            //{
 
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = "https://localhost:44332",
-                    ValidAudience = "https://localhost:44332",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@cj"))
-                };
+            //        ValidIssuer = "https://localhost:44332",
+            //        ValidAudience = "https://localhost:44332",
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@cj"))
+            //    };
 
-            }); 
+            //}); 
+
+            // configure strongly typed settings object
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
 
             services.AddSingleton<IConfiguration>(Configuration);
             Global.ConnectionString = Configuration.GetConnectionString("CrudAPI");
@@ -89,9 +94,12 @@ namespace HRIS_API
 
             app.UseCors();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
