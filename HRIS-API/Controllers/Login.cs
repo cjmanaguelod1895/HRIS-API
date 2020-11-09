@@ -28,12 +28,30 @@ namespace HRIS_API.Controllers
         [HttpPost]
         public IActionResult Authenticate(AuthenticateRequest model)
         {
-            var response = _oLoginService.Authenticate(model);
+            if (model == null)
+            {
+                return Unauthorized();
+            }
 
-            if (response == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+            var userAccount = _oLoginService.Authenticate(model);
 
-            return Ok(response);
+            if (userAccount == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(userAccount);
         }
+
+        //[HttpGet]
+        //[Route("Token/Refresh")]
+        //public ActionResult<string> RefreshToken()
+        //{
+        //    Request.Headers.TryGetValue("Authorization", out var tracevalue);
+            
+        //    var tokenDTO = AppSettings
+
+        //    if
+        //}
     }
 }

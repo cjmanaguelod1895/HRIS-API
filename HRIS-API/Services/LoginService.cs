@@ -62,7 +62,7 @@ namespace HRIS_API.Services
 
 
                         // authentication successful so generate jwt token
-                        token = generateJwtToken(_oUser);
+                        token = GenerateJWTToke(_oUser);
                     }
                 }
 
@@ -81,9 +81,9 @@ namespace HRIS_API.Services
         }
 
 
-        private string generateJwtToken(Users user)
+        private string GenerateJWTToke(Users user)
         {
-            // generate token that is valid for 7 days
+             //generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -94,6 +94,21 @@ namespace HRIS_API.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+
+            //var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            //var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            //var tokeOptions = new JwtSecurityToken(
+            //    issuer: "http://localhost:5000",
+            //    audience: "http://localhost:5000",
+            //    claims: new List<Claim>(),
+            //    expires: DateTime.Now.AddMinutes(30),
+            //    signingCredentials: signinCredentials
+            //);
+            //var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
+
+            //return tokenString;
+
         }
     }
 }

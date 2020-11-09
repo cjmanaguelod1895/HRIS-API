@@ -10,6 +10,7 @@ using HRIS_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -34,19 +35,22 @@ namespace HRIS_API
         {
             services.AddControllers();
 
-            //CORS
+            #region Set CORS
+            //services.AddCors();
             services.AddCors(options =>
             {
-            options.AddDefaultPolicy(
-                builder => builder.WithOrigins("https://localhost:44332"));
-                options.AddPolicy("myPolicy", builder =>
-                 builder.WithOrigins("http://localhost:8080"));
-                   
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             });
+            #endregion
 
-            //JWT Implementation
+            #region Set JWT
             // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            #endregion
+
 
 
             services.AddSingleton<IConfiguration>(Configuration);
@@ -65,9 +69,15 @@ namespace HRIS_API
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("CorsPolicy");
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            });
+
+            app.UseRouting();
 
             app.UseAuthentication();
 
@@ -79,7 +89,7 @@ namespace HRIS_API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers().RequireCors("myPolicy");
+                endpoints.MapControllers();
             });
         }
     }
