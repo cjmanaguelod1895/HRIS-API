@@ -4,7 +4,7 @@ type: docker
 name: Use Sonarqube
 steps:
 - name: Build
-  image: burakince/docker-dotnet-sonarscanner
+  image: nosinovacao/dotnet-sonar
   commands:
      - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:"HRIS-API"
      - dotnet-scanner
