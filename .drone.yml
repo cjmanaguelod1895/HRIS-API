@@ -12,10 +12,7 @@ steps:
       from_secret: sonar_token
   commands:
     - dotnet 
-    - dotnet "/drone/src/HRIS-API" begin /k:"HRIS-API" /d:sonar.organization="cjmanaguelod1895" /d:sonar.host.url="$sonar_host" /d:sonar.login="$sonar_token"
-    - dotnet sonarscanner begin /d:sonar.login=5d7f67176519a94f57416f1b02ec27628c9f7d75 /k:”HRIS-API”
-    - dotnet build
-    - dotnet sonarscanner end /d:sonar.login=5d7f67176519a94f57416f1b02ec27628c9f7d75
+    - dotnet "/drone/src/HRIS-API.sln" begin /k:"HRIS-API" /d:sonar.organization="cjmanaguelod1895" /d:sonar.host.url="$sonar_host" /d:sonar.login="$sonar_token"
 
 - name: code-analysis
   image: aosapps/drone-sonar-plugin
