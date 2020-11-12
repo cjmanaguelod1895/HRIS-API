@@ -11,7 +11,7 @@ steps:
     sonar_token:
       from_secret: sonar_token
   commands:
-    - sonar-scanner --help
+    - sonar-scanner --d 
    
   
 trigger:
