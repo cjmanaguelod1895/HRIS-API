@@ -6,7 +6,7 @@ steps:
 - name: Build
   image: burakince/docker-dotnet-sonarscanner
   commands:
-    #- dotnet clean
+    - PROJECT_KEY=test
     #- dotnet build
     
 - name: code-analysis
