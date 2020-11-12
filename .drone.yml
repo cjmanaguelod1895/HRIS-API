@@ -6,7 +6,7 @@ steps:
 - name: Build
   image: burakince/docker-dotnet-sonarscanner
   commands:
-     - dotnet
+     - dotnet sonarscanner begin /k:"HRIS-API" 
      - dotnet-scanner
     #- dotnet-scanner -it --rm -v $(pwd):/project -e PROJECT_KEY=ConsoleApplication1 -e PROJECT_NAME=ConsoleApplication1 -e PROJECT_VERSION=1.0 -e HOST=http://localhost:9000 -e LOGIN_KEY=CHANGE_THIS_ONE
     #- dotnet build
