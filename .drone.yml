@@ -4,7 +4,7 @@ type: docker
 name: Use Sonarqube
 steps:
 - name: Publish and Deploy
-  image: sonarqube
+  image: sonarsource/sonar-scanner-cli
   #commands:
     #- sonar --help
 
