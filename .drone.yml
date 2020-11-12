@@ -5,8 +5,8 @@ name: Use Sonarqube
 steps:
 - name: Publish and Deploy
   image: sonarqube
-  commands:
-    - sonar --help
+  #commands:
+    #- sonar --help
 
     
 - name: code-analysis
