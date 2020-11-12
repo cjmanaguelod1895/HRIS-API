@@ -4,10 +4,10 @@ type: docker
 name: Use Sonarqube
 steps:
 - name: Build
-  image: mcr.microsoft.com/dotnet/sdk
+  image: burakince/docker-dotnet-sonarscanner
   commands:
-    - dotnet clean
-    - dotnet build
+    #- dotnet clean
+    #- dotnet build
     
 - name: code-analysis
   image: aosapps/drone-sonar-plugin
