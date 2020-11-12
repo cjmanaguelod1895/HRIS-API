@@ -10,13 +10,13 @@ steps:
      - dotnet build
      - dotnet /sonar-scanner/SonarScanner.MSBuild.dll end /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
     
-- name: code-analysis
-  image: aosapps/drone-sonar-plugin
-  settings:
-    sonar_host:
-      from_secret: sonar_host
-    sonar_token:
-      from_secret: sonar_token
+#- name: code-analysis
+  #image: aosapps/drone-sonar-plugin
+  #settings:
+    #sonar_host:
+      #from_secret: sonar_host
+    #sonar_token:
+      #from_secret: sonar_token
 
 trigger:
   branch:
