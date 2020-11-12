@@ -4,7 +4,7 @@ type: docker
 name: Use Sonarqube
 steps:
 - name: Publish and Deploy
-  image: mcr.microsoft.com/dotnetcore/sdk
+  image: mcr.microsoft.com/dotnet/sdk
   commands:
     - dotnet tool install --global dotnet-sonarscanner
     - dotnet sonarscanner begin /k:"HRIS-API" /o:"cjmanaguelod1895" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
