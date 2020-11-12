@@ -9,8 +9,6 @@ steps:
         from_secret: sonar_host
       sonar_token:
         from_secret: sonar_token
- commands:
-    - dotnet tool install --global dotnet-sonarscanner --version 4.8.0
         
 trigger:
   branch:
