@@ -62,7 +62,7 @@ namespace HRIS_API.Services
 
 
                         // authentication successful so generate jwt token
-                        token = GenerateJWTToke(_oUser);
+                        token = GenerateJWTToken(_oUser);
                     }
                 }
 
@@ -81,7 +81,7 @@ namespace HRIS_API.Services
         }
 
 
-        private string GenerateJWTToke(Users user)
+        private string GenerateJWTToken(Users user)
         {
              //generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -35,9 +35,9 @@ namespace HRIS_API.Controllers
 
             var userAccount = _oLoginService.Authenticate(model);
 
-            if (userAccount == null)
+            if (userAccount.Token == null || userAccount.Token == "")
             {
-                return Unauthorized();
+                return BadRequest(new { message = "Incorrect username or password" });
             }
 
             return Ok(userAccount);
