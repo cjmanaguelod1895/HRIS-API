@@ -11,8 +11,7 @@ steps:
     sonar_token:
       from_secret: sonar_token
   commands:
-    - sonar-scanner
-    - Sonar.Scanner begin /k:"HRIS-API" /o:"cjmanaguelod1895" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
+    - sonar-scannerbegin /k:"HRIS-API" /o:"cjmanaguelod1895" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
    
   
 trigger:
