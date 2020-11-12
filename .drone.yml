@@ -4,10 +4,9 @@ type: docker
 name: Use Sonarqube
 steps:
 - name: Build
-  #image: nosinovacao/dotnet-sonar
-  image: sonarsource/sonar-scanner-cli
+  image: nosinovacao/dotnet-sonar
   commands:
-     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:HRIS-API /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
+     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:HRIS-API /o:cjmanaguelod1895 /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
      - dotnet build
      - dotnet /sonar-scanner/SonarScanner.MSBuild.dll end  /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
     
