@@ -3,13 +3,17 @@ kind: pipeline
 type: docker
 name: Use Sonarqube
 steps:
-  - image: aosapps/drone-sonar-plugin
-    name: code-analysis
+  - name: code-analysis
+    image: aosapps/drone-sonar-plugin
     settings:
       sonar_host:
         from_secret: sonar_host
       sonar_token:
         from_secret: sonar_token
+  commands:
+    - SonnarScanner.MSBuild.exe begin k:"HRIS-API" MSBuild.exe HRIS-API.sln /t:Rebuild
+    - SonnarScanner.MSBuild.exe end
+  
 trigger:
   branch:
     include:
