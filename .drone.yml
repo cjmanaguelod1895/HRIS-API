@@ -6,7 +6,6 @@ steps:
 - name: Publish and Deploy
   image: mcr.microsoft.com/dotnet/sdk
   commands:
-    - dotnet tool install --global dotnet-sonarscanner
     - dotnet sonarscanner begin /d:sonar.login=5d7f67176519a94f57416f1b02ec27628c9f7d75 /k:”HRIS-API”
     - dotnet build
     - dotnet sonarscanner end /d:sonar.login=5d7f67176519a94f57416f1b02ec27628c9f7d75
