@@ -16,10 +16,7 @@ steps:
       from_secret: sonar_host
     sonar_token:
       from_secret: sonar_token
-  commands:
-     - Dsonar
-   
-  
+
 trigger:
   branch:
     include:
