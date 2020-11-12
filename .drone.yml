@@ -5,6 +5,7 @@ name: Use Sonarqube
 steps:
 - name: Build
   image: nosinovacao/dotnet-sonar
+  failure: ignore
   commands:
      - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:HRIS-API /o:cjmanaguelod1895 /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
      - dotnet build
