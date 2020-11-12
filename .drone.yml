@@ -3,12 +3,6 @@ kind: pipeline
 type: docker
 name: Use Sonarqube
 steps:
-- name: Publish and Deploy
-  image: sonarsource/sonar-scanner-cli
-  #commands:
-    #- sonar --help
-
-    
 - name: code-analysis
   image: aosapps/drone-sonar-plugin
   settings:
