@@ -19,6 +19,8 @@ namespace HRIS_API.Models
 
         public string EmailAddress { get; set; }
 
+        public string Role { get; set; }
+
 
         public string Username { get; set; }
 
@@ -39,6 +41,7 @@ namespace HRIS_API.Models
             parameters.Add("@Age", oUser.Age);
             parameters.Add("@Address", oUser.Address);
             parameters.Add("@EmailAddress", oUser.EmailAddress);
+            parameters.Add("@Role", oUser.Role);
             parameters.Add("@Username", oUser.Username);
             parameters.Add("@Password", oUser.Password);
             parameters.Add("@OperationType", operationType);

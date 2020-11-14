@@ -13,6 +13,8 @@ namespace HRIS_API.Models
 
         public string Username { get; set; }
 
+        public string Role { get; set; }
+
         public string Token { get; set; }
 
         public AuthenticateResponse(Users user, string token)
@@ -20,6 +22,7 @@ namespace HRIS_API.Models
             UserId = user.UserId;
             Name = user.Name;
             Username = user.Username;
+            Role = user.Role;
             Token = token;
         }
 
