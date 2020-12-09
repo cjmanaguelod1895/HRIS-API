@@ -1,23 +1,26 @@
 ---
 kind: pipeline
 type: docker
-name: Use Sonarqube
+name: SonarCloud MSBuild Scanner
 steps:
-- name: Build
+- name: Build and Push to Sonar Cloud
   image: sijaymm/sonar-msbuild:latest
+  environment:
+    sonar_host:
+      from_secret: sonar_host
+    sonar_token:
+      from_secret: sonar_token
+    organization_name:
+      from_secret: organization_name
+    project_key:
+       from_secret: project_key
+    login_key:
+      from_secret: login_key
   commands:
-     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:HRIS-API /o:"cjmanaguelod1895" /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
+     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:"$project_key" /o:"$organization_name" /d:sonar.host.url="$sonar_host" /d:sonar.login="$login_key"
      - dotnet build
-     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll end /d:sonar.login="7053feaa49bfd77702a73e9bda280f5e9c16a6bd"
-    
-#- name: code-analysis
-  #image: aosapps/drone-sonar-plugin
-  #settings:
-    #sonar_host:
-      #from_secret: sonar_host
-    #sonar_token:
-      #from_secret: sonar_token
-
+     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll end /d:sonar.login="$login_key"
+     
 trigger:
   branch:
     include:
